@@ -58,15 +58,16 @@ class LocationPickerExample extends Component {
 }
 ```
 ### Usage
-LocationPicker properties
-| Property | Type | Description
-:---|:---|:----
-| containerElement | node | required, A container element for map element
-| mapElement | node | required, A map element
-| onChange | function | required, A callback which gets called on every map marker position change, it is passed with one argument of type object which has location information.
-| defaultPosition | object | required, A default position for map center.
-| zoom | number | optional, Map zoom level
-| radius | number | optional, Circle radius in meter
+LocationPicker properties 
+
+| Property | Type | Description |  
+|---------------------|-------------------|------------------|  
+| containerElement | node | required, A container element for map element|  
+| mapElement | node | required, A map element|  
+| onChange | function | required, A callback which gets called on every map marker position change, it is passed with one argument of type object which has location information.|
+| defaultPosition | object | required, A default position for map center.|
+| zoom | number | optional, Map zoom level |
+| radius | number | optional, Circle radius in meter|
 | circleOptions | object | optional,  https://developers.google.com/maps/documentation/javascript/3.exp/reference#CircleOptions
   
 

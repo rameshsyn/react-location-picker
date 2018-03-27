@@ -18,12 +18,14 @@ const Map = withGoogleMap((props) => {
     radius,
     circleOptions
   } = props;
-  let circle = (radius == -1) ?
-              <Circle
-                center={position}
-                radius={radius}
-                options={circleOptions}
-              /> : "";
+
+  const circle = (radius !== -1) ?
+    <Circle
+      center={position}
+      radius={radius}
+      options={circleOptions}
+    /> : null;
+
   return (
     <GoogleMap
       onZoomChanged={onZoomChanged}
@@ -39,7 +41,7 @@ const Map = withGoogleMap((props) => {
       />
 
       {/* Circle */}
-      circle
+      { circle }
     </GoogleMap>
   )
 });

@@ -102,26 +102,20 @@ class LocationPicker extends Component {
 
     const { position } = this.state;
 
-    /* Use default if not passed */
-    const _zoom = zoom || DEFAULT_ZOOM;
-    const _radius = radius || DEFAULT_RADIUS;
-    const _circleOptions = circleOptions || DEFAULT_CIRCLE_OPTIONS;
-
     return (
       <Map
         containerElement={containerElement}
         mapElement={mapElement}
         handleMarkerDragEnd={this.handleMarkerDragEnd}
         position={position}
-        circleOptions={_circleOptions}
-        radius={_radius}
-        defaultZoom={_zoom}
+        circleOptions={circleOptions}
+        radius={radius}
+        defaultZoom={zoom}
       />
     );
   }
 }
 
-/* Check props */
 LocationPicker.propTypes = {
   containerElement: PropTypes.node.isRequired,
   mapElement: PropTypes.node.isRequired,
@@ -130,6 +124,12 @@ LocationPicker.propTypes = {
   zoom: PropTypes.number,
   radius: PropTypes.number,
   circleOptions: PropTypes.object
-}
+};
+
+LocationPicker.defaultProps = {
+  zoom: DEFAULT_ZOOM,
+  radius: DEFAULT_RADIUS,
+  circleOptions: DEFAULT_CIRCLE_OPTIONS
+};
 
 export default LocationPicker;

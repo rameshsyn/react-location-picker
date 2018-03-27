@@ -33,6 +33,8 @@ class LocationPickerExample extends Component {
   render () {
     return (
       <div>
+        <a href="https://github.com/rameshsyn/react-location-picker#example">Example</a>&nbsp;&nbsp;&nbsp;
+        <a href="https://github.com/rameshsyn/react-location-picker#usage">Usage</a>
         <h1>{this.state.address}</h1>
         <div>
           <LocationPicker

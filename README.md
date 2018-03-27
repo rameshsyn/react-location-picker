@@ -3,9 +3,13 @@
 
 [Demo](https://rameshsyn.github.io/react-location-picker)
 ### Installation
-`npm install react-location-picker --save`  
+```shell 
+npm install react-location-picker --save
+```  
 or  
-`yarn add react-location-picker --save`
+```shell 
+yarn add react-location-picker --save
+```
 
 You need to include google map script in your page.  
 `    <script src="https://maps.googleapis.com/maps/api/js?&v=3.exp&libraries=geometry,drawing,places"></script>
@@ -27,7 +31,8 @@ class LocationPickerExample extends Component {
     super(props);
 
     this.state = {
-      address: "Kala Pattar Ascent Trail, Khumjung 56000, Nepal"
+      address: "Kala Pattar Ascent Trail, Khumjung 56000, Nepal",
+      position: ""
     };
 
     // Bind
@@ -67,7 +72,7 @@ LocationPicker properties
 | onChange | function | required, A callback which gets called on every map marker position change, it is passed with one argument of type object which has location information.|
 | defaultPosition | object | required, A default position for map center.|
 | zoom | number | optional, Map zoom level |
-| radius | number | optional, Circle radius in meter|
+| radius | number | optional, Circle radius in meter. or Pass -1 to hide it.|
 | circleOptions | object | optional,  https://developers.google.com/maps/documentation/javascript/3.exp/reference#CircleOptions
   
 

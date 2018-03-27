@@ -1,3 +1,8 @@
+1.1.2 (Mar 27, 2018)
+-------------
+- Update dependencies
+- Add react as peer dependency
+
 1.1.1 (Mar 27, 2018)
 ------------
 - Allow circle to be hidden [#2](https://github.com/rameshsyn/react-location-picker/pull/2)

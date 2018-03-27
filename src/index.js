@@ -34,10 +34,10 @@ class LocationPicker extends Component {
     this.geocodePosition = this.geocodePosition.bind(this);
   }
 
-  componentWillReceiveProps (nextProps, prevProps) {
+  componentWillReceiveProps (nextProps) {
     const { defaultPosition } = nextProps;
-
-    this.setState({ defaultPosition });
+    if (JSON.stringify(defaultPosition) !== JSON.stringify(this.props.defaultPosition))
+      this.setState({ defaultPosition });
   }
 
   /**

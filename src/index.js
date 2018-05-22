@@ -31,7 +31,6 @@ class LocationPicker extends Component {
     };
 
     this.handleMarkerDragEnd = this.handleMarkerDragEnd.bind(this);
-    this.geocodePosition = this.geocodePosition.bind(this);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -40,32 +39,32 @@ class LocationPicker extends Component {
       this.setState({ defaultPosition });
   }
 
+  notify (position, address) {
+    const { onChange } = this.props;
+    const location = {
+      position,
+      address
+    };
+    onChange && onChange(location);
+  }
   /**
    * Handle Map marker position change
    * @param { MouseEvent } mouseEvent // https://developers.google.com/maps/documentation/javascript/3.exp/reference#MouseEvent
    */
   handleMarkerDragEnd (mouseEvent) {
-
+    const { onChange } = this.props;
     // Get latitude and longitude
     const lat = mouseEvent.latLng.lat();
     const lng = mouseEvent.latLng.lng();
-
     const position = { lat, lng };
-
-    // Get address
+    this.setState({ position });
     this.geocodePosition(position)
       .then(address => {
-
-        // Set new latitude and longitude
-        this.setState({ position });
-
-        const location = {
-          position,
-          address
-        };
-
-        // Pass location to application change listener
-        this.props.onChange(location);
+        this.notify(position, address);
+      })
+      .catch(err => {
+        console.error(err);
+        this.notify(position, "");
       });
   }
 
@@ -90,8 +89,6 @@ class LocationPicker extends Component {
   };
 
   render () {
-
-    /* Get props */
     const {
       zoom,
       radius,

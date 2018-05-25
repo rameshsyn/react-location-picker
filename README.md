@@ -32,7 +32,10 @@ class LocationPickerExample extends Component {
 
     this.state = {
       address: "Kala Pattar Ascent Trail, Khumjung 56000, Nepal",
-      position: ""
+      position: {
+         lat: 0,
+         lng: 0
+      }
     };
 
     // Bind

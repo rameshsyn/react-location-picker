@@ -1,3 +1,7 @@
+1.1.4 (May 25, 2018)
+-------------
+- Fix [#4](https://github.com/rameshsyn/react-location-picker/issues/4)
+
 1.1.3 (May 22, 2018)
 -------------
 - Fix [#3](https://github.com/rameshsyn/react-location-picker/issues/3)

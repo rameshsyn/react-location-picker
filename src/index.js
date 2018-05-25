@@ -36,7 +36,7 @@ class LocationPicker extends Component {
   componentWillReceiveProps (nextProps) {
     const { defaultPosition } = nextProps;
     if (JSON.stringify(defaultPosition) !== JSON.stringify(this.props.defaultPosition))
-      this.setState({ defaultPosition });
+      this.setState({ position: defaultPosition });
   }
 
   notify (position, address) {

@@ -1,3 +1,9 @@
+1.2.4 (May 26, 2018)
+-------------
+- Features:
+  1. Reverse geocode new default position to get an address.
+  2. Re center map on default position change.
+
 1.1.4 (May 25, 2018)
 -------------
 - Fix [#4](https://github.com/rameshsyn/react-location-picker/issues/4)

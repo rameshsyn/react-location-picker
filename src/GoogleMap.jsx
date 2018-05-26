@@ -16,7 +16,8 @@ const Map = withGoogleMap((props) => {
     handleMarkerDragEnd,
     onZoomChanged,
     radius,
-    circleOptions
+    circleOptions,
+    shouldRecenterMap
   } = props;
 
   const circle = (radius !== -1) ?
@@ -25,12 +26,13 @@ const Map = withGoogleMap((props) => {
       radius={radius}
       options={circleOptions}
     /> : null;
-
+  const mapExtraProps = shouldRecenterMap ? { center: position }: {};
   return (
     <GoogleMap
       onZoomChanged={onZoomChanged}
       defaultZoom={defaultZoom}
       defaultCenter={position}
+      {...mapExtraProps}
     >
 
       {/* Map marker */}

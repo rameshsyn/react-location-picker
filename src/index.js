@@ -27,7 +27,8 @@ class LocationPicker extends Component {
     super(props);
 
     this.state = {
-      position: props.defaultPosition
+      position: props.defaultPosition,
+      shouldRecenterMap: false
     };
 
     this.handleMarkerDragEnd = this.handleMarkerDragEnd.bind(this);
@@ -36,7 +37,7 @@ class LocationPicker extends Component {
   componentWillReceiveProps (nextProps) {
     const { defaultPosition } = nextProps;
     if (JSON.stringify(defaultPosition) !== JSON.stringify(this.props.defaultPosition)) {
-      this.setState({ position: defaultPosition }, () => {
+      this.setState({ position: defaultPosition, shouldRecenterMap: true }, () => {
         // Reverse geocode new default position
         this.geocodePosition(defaultPosition)
         .then(address => {
@@ -68,7 +69,7 @@ class LocationPicker extends Component {
     const lat = mouseEvent.latLng.lat();
     const lng = mouseEvent.latLng.lng();
     const position = { lat, lng };
-    this.setState({ position });
+    this.setState({ position, shouldRecenterMap: false });
     this.geocodePosition(position)
       .then(address => {
         this.notify(position, address);
@@ -108,7 +109,7 @@ class LocationPicker extends Component {
       mapElement
     } = this.props;
 
-    const { position } = this.state;
+    const { position, shouldRecenterMap } = this.state;
 
     return (
       <Map
@@ -119,6 +120,7 @@ class LocationPicker extends Component {
         circleOptions={circleOptions}
         radius={radius}
         defaultZoom={zoom}
+        shouldRecenterMap={shouldRecenterMap}
       />
     );
   }

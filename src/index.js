@@ -35,8 +35,19 @@ class LocationPicker extends Component {
 
   componentWillReceiveProps (nextProps) {
     const { defaultPosition } = nextProps;
-    if (JSON.stringify(defaultPosition) !== JSON.stringify(this.props.defaultPosition))
-      this.setState({ position: defaultPosition });
+    if (JSON.stringify(defaultPosition) !== JSON.stringify(this.props.defaultPosition)) {
+      this.setState({ position: defaultPosition }, () => {
+        // Reverse geocode new default position
+        this.geocodePosition(defaultPosition)
+        .then(address => {
+          this.notify(defaultPosition, address);
+        })
+        .catch(err => {
+          console.error(err);
+          this.notify(defaultPosition, "");
+        });
+      });
+    }
   }
 
   notify (position, address) {

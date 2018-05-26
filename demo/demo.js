@@ -17,7 +17,9 @@ class LocationPickerExample extends Component {
     super(props);
 
     this.state = {
-      address: "Kala Pattar Ascent Trail, Khumjung 56000, Nepal"
+      address: "Kala Pattar Ascent Trail, Khumjung 56000, Nepal",
+      position: {},
+      defaultPosition: defaultPosition
     };
 
     // Bind
@@ -30,6 +32,18 @@ class LocationPickerExample extends Component {
     this.setState({ position, address });
   }
 
+  componentDidMount () {
+    navigator && navigator.geolocation.getCurrentPosition(position => {
+      const { latitude, longitude } = position.coords;
+      this.setState({
+        defaultPosition: {
+          lat: latitude,
+          lng: longitude
+        }
+      });
+    });
+  }
+
   render () {
     return (
       <div>
@@ -40,7 +54,7 @@ class LocationPickerExample extends Component {
           <LocationPicker
             containerElement={ <div style={ {height: '100%'} } /> }
             mapElement={ <div style={ {height: '400px'} } /> }
-            defaultPosition={defaultPosition}
+            defaultPosition={this.state.defaultPosition}
             radius={-1}
             onChange={this.handleLocationChange}
           />

@@ -1,3 +1,8 @@
+1.3.0 (Jul 27, 2018)
+-------------
+- Return everything from the Geocoding API [#5](https://github.com/rameshsyn/react-location-picker/pull/5), Huge thanks to [altenorjr](https://github.com/altenorjr)
+- import react-google-maps components from its lib, decreases package size.
+
 1.2.4 (May 26, 2018)
 -------------
 - Features:

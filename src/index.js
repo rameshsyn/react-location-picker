@@ -15,15 +15,15 @@ const DEFAULT_ZOOM = 10;
 /* Circle options */
 // https://developers.google.com/maps/documentation/javascript/3.exp/reference#CircleOptions
 const DEFAULT_CIRCLE_OPTIONS = {
-  fillColor: "red",
-  fillOpacity: 0.20,
-  strokeColor: "red",
+  fillColor: 'red',
+  fillOpacity: 0.2,
+  strokeColor: 'red',
   strokeOpacity: 1,
-  strokeWeight: 1.2,
+  strokeWeight: 1.2
 };
 
 class LocationPicker extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -34,28 +34,35 @@ class LocationPicker extends Component {
     this.handleMarkerDragEnd = this.handleMarkerDragEnd.bind(this);
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { defaultPosition } = nextProps;
-    if (JSON.stringify(defaultPosition) !== JSON.stringify(this.props.defaultPosition)) {
-      this.setState({ position: defaultPosition, shouldRecenterMap: true }, () => {
-        // Reverse geocode new default position
-        this.geocodePosition(defaultPosition)
-        .then(address => {
-          this.notify(defaultPosition, address);
-        })
-        .catch(err => {
-          console.error(err);
-          this.notify(defaultPosition, "");
-        });
-      });
+    if (
+      JSON.stringify(defaultPosition) !==
+      JSON.stringify(this.props.defaultPosition)
+    ) {
+      this.setState(
+        { position: defaultPosition, shouldRecenterMap: true },
+        () => {
+          // Reverse geocode new default position
+          this.geocodePosition(defaultPosition)
+            .then(places => {
+              this.notify(defaultPosition, places);
+            })
+            .catch(err => {
+              console.error(err);
+              this.notify(defaultPosition, []);
+            });
+        }
+      );
     }
   }
 
-  notify (position, address) {
+  notify(position, places) {
     const { onChange } = this.props;
     const location = {
       position,
-      address
+      places,
+      address: places.length > 0 ? places[0].formatted_address : ''
     };
     onChange && onChange(location);
   }
@@ -63,7 +70,7 @@ class LocationPicker extends Component {
    * Handle Map marker position change
    * @param { MouseEvent } mouseEvent // https://developers.google.com/maps/documentation/javascript/3.exp/reference#MouseEvent
    */
-  handleMarkerDragEnd (mouseEvent) {
+  handleMarkerDragEnd(mouseEvent) {
     const { onChange } = this.props;
     // Get latitude and longitude
     const lat = mouseEvent.latLng.lat();
@@ -71,36 +78,36 @@ class LocationPicker extends Component {
     const position = { lat, lng };
     this.setState({ position, shouldRecenterMap: false });
     this.geocodePosition(position)
-      .then(address => {
-        this.notify(position, address);
+      .then(places => {
+        this.notify(position, places);
       })
       .catch(err => {
         console.error(err);
-        this.notify(position, "");
+        this.notify(position, []);
       });
   }
 
   /**
-   * Geocode position to address
+   * Geocode position to places
    * @param { Object } position
    * @return { Promise }
    */
-  geocodePosition (position) {
-
+  geocodePosition(position) {
     // Geocoder instance
     const geocoder = new google.maps.Geocoder();
 
     return new Promise((resolve, reject) => {
-      geocoder.geocode({ 'location': position }, (results, status) => {
-        if (status === google.maps.GeocoderStatus.OK)
-          resolve(results[0].formatted_address);
-        else
+      geocoder.geocode({ location: position }, (results, status) => {
+        if (status === google.maps.GeocoderStatus.OK) {
+          resolve(results);
+        } else {
           reject(status);
+        }
       });
     });
-  };
+  }
 
-  render () {
+  render() {
     const {
       zoom,
       radius,

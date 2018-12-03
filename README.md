@@ -1,7 +1,7 @@
 # react-location-picker
 > A react component to pick a location using google maps.
 
-[Demo](https://rameshsyn.github.io/react-location-picker)
+[Demo](https://react-location-picker.netlify.com/)
 ### Installation
 ```shell 
 npm install react-location-picker --save

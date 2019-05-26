@@ -42,7 +42,7 @@ class LocationPickerExample extends Component {
     this.handleLocationChange = this.handleLocationChange.bind(this);
   }
 
-  handleLocationChange ({ position, address }) {
+  handleLocationChange ({ position, address, places }) {
 
     // Set new location
     this.setState({ position, address });

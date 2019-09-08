@@ -6,6 +6,7 @@
   "license": "MIT",
   "git": "https://github.com/rameshsyn/react-location-picker",
   "author": "Ramesh Syangtan <rameshsyangtan92@gmail.com>",
+  "types": "src/index.d.ts",
   "scripts": {
     "start": "webpack-dev-server",
     "build:lib": "babel src -d lib",
@@ -28,6 +29,8 @@
   },
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0",
-    "react-dom": "^15.0.0 || ^16.0.0"
+    "react-dom": "^15.0.0 || ^16.0.0",
+    "@types/googlemaps": "^3.37.6",
+    "@types/react": "^16.9.2"
   }
 }

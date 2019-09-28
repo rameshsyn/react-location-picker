@@ -127,6 +127,7 @@ class LocationPicker extends Component {
         circleOptions={circleOptions}
         radius={radius}
         defaultZoom={zoom}
+        zoom={zoom}
         shouldRecenterMap={shouldRecenterMap}
       />
     );

@@ -30,12 +30,11 @@ const searchBoxStyles = {
   transitionDuration: "0.3s",
   transitionProperty: "box-shadow",
   transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+  marginTop:14,
+  marginRight:14,
   maxWidth: 310,
   minWidth: 280,
-  WebkitFontSmoothing: "antialiased",
-  position: "absolute",
-  top:8,
-  right:8
+  WebkitFontSmoothing: "antialiased"
 };
 
 const SearchBox = (props) => (

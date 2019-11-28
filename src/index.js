@@ -149,7 +149,6 @@ class LocationPicker extends Component {
 
 
     return (
-      <div style={{position:"relative"}} > 
         <Map
           containerElement={containerElement}
           mapElement={mapElement}
@@ -165,7 +164,6 @@ class LocationPicker extends Component {
           address={address}
           search={search}
         />
-      </div>
     );
   }
 }

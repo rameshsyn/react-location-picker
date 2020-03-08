@@ -12,7 +12,7 @@ yarn add react-location-picker --save
 ```
 
 You need to include google map script in your page.  
-`    <script src="https://maps.googleapis.com/maps/api/js?&v=3.exp&libraries=geometry,drawing,places"></script>
+`    <script src="https://maps.googleapis.com/maps/api/js?key=<INSERT_API_KEY_HERE>&v=3.exp&libraries=geometry,drawing,places"></script>
 `
 ### Example
 ```js

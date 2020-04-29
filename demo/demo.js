@@ -5,7 +5,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import LocationPicker from '../lib';
-import {GoogleMap} from "@react-google-maps/api";
 
 /* Default position */
 const defaultPosition = {

@@ -6,8 +6,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Map from './GoogleMap';
 
-const google = window.google;
-
 /* Default configuration */
 const DEFAULT_RADIUS = 1000;
 const DEFAULT_ZOOM = 10;
@@ -34,26 +32,33 @@ class LocationPicker extends Component {
     this.handleMarkerDragEnd = this.handleMarkerDragEnd.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { defaultPosition } = nextProps;
+  static getDerivedStateFromProps(props, state) {
+    const { defaultPosition } = props;
     if (
       JSON.stringify(defaultPosition) !==
-      JSON.stringify(this.props.defaultPosition)
+      JSON.stringify(state.position)
     ) {
-      this.setState(
-        { position: defaultPosition, shouldRecenterMap: true },
-        () => {
-          // Reverse geocode new default position
-          this.geocodePosition(defaultPosition)
-            .then(places => {
-              this.notify(defaultPosition, places);
-            })
-            .catch(err => {
-              console.error(err);
-              this.notify(defaultPosition, []);
-            });
-        }
-      );
+      //console.log("New position:");
+      //console.log(state.position);
+      return { position: state.position, shouldRecenterMap: true };
+    } else
+      return null;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.position !== this.state.position){
+      //console.log("prevState.position", prevState.position);
+      //console.log("this.state.position", this.state.position);
+
+      // Reverse geocode new default position
+      this.geocodePosition(this.state.position)
+        .then(places => {
+          this.notify(this.state.position, places);
+        })
+        .catch(err => {
+          console.error(err);
+          this.notify(this.state.position, []);
+        });
     }
   }
 
@@ -76,14 +81,6 @@ class LocationPicker extends Component {
     const lng = mouseEvent.latLng.lng();
     const position = { lat, lng };
     this.setState({ position, shouldRecenterMap: false });
-    this.geocodePosition(position)
-      .then(places => {
-        this.notify(position, places);
-      })
-      .catch(err => {
-        console.error(err);
-        this.notify(position, []);
-      });
   }
 
   /**
@@ -93,11 +90,11 @@ class LocationPicker extends Component {
    */
   geocodePosition(position) {
     // Geocoder instance
-    const geocoder = new google.maps.Geocoder();
+    const geocoder = new window.google.maps.Geocoder();
 
     return new Promise((resolve, reject) => {
       geocoder.geocode({ location: position }, (results, status) => {
-        if (status === google.maps.GeocoderStatus.OK) {
+        if (status === window.google.maps.GeocoderStatus.OK) {
           resolve(results);
         } else {
           reject(status);

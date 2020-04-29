@@ -1,13 +1,8 @@
 import React from 'react';
-import withGoogleMap from 'react-google-maps/lib/withGoogleMap';
-import GoogleMap from 'react-google-maps/lib/components/GoogleMap';
-import Marker from 'react-google-maps/lib/components/Marker';
-import Circle from 'react-google-maps/lib/components/Circle';
+import {GoogleMap, Marker, Circle} from '@react-google-maps/api';
 
-/* Create map with withGoogleMap HOC */
-/* https://github.com/tomchentw/react-google-maps */
 
-const Map = withGoogleMap((props) => {
+function Map (props) {
   const {
     position,
     defaultZoom,
@@ -16,36 +11,39 @@ const Map = withGoogleMap((props) => {
     radius,
     circleOptions,
     shouldRecenterMap,
-    zoom
+    zoom,
+    mapContainerStyle,
+    mapOptions
   } = props;
 
-  const circle = (radius !== -1) ?
-    <Circle
-      center={position}
-      radius={radius}
-      options={circleOptions}
-    /> : null;
-  const mapExtraProps = shouldRecenterMap ? { center: position }: {};
+  const mapExtraProps = shouldRecenterMap ? {center: position} : {};
+
   return (
     <GoogleMap
+      options={mapOptions}
+      mapContainerStyle={mapContainerStyle}
       onZoomChanged={onZoomChanged}
       defaultZoom={defaultZoom}
-      defaultCenter={position}
       zoom={zoom}
+      center={position}
       {...mapExtraProps}
     >
 
-      {/* Map marker */}
       <Marker
         draggable // Allow marker to drag
         position={position}
         onDragEnd={handleMarkerDragEnd}
       />
 
-      {/* Circle */}
-      { circle }
+      {radius !== -1 &&
+      <Circle
+        center={position}
+        radius={radius}
+        options={circleOptions}
+      />}
+
     </GoogleMap>
   )
-});
+}
 
 export default Map;

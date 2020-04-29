@@ -71,7 +71,6 @@ class LocationPicker extends Component {
    * @param { MouseEvent } mouseEvent // https://developers.google.com/maps/documentation/javascript/3.exp/reference#MouseEvent
    */
   handleMarkerDragEnd(mouseEvent) {
-    const { onChange } = this.props;
     // Get latitude and longitude
     const lat = mouseEvent.latLng.lat();
     const lng = mouseEvent.latLng.lng();
@@ -112,16 +111,16 @@ class LocationPicker extends Component {
       zoom,
       radius,
       circleOptions,
-      containerElement,
-      mapElement
+      mapContainerStyle,
+      mapOptions
     } = this.props;
 
     const { position, shouldRecenterMap } = this.state;
 
     return (
       <Map
-        containerElement={containerElement}
-        mapElement={mapElement}
+        mapOptions={mapOptions}
+        mapContainerStyle={mapContainerStyle}
         handleMarkerDragEnd={this.handleMarkerDragEnd}
         position={position}
         circleOptions={circleOptions}
@@ -135,13 +134,13 @@ class LocationPicker extends Component {
 }
 
 LocationPicker.propTypes = {
-  containerElement: PropTypes.node.isRequired,
-  mapElement: PropTypes.node.isRequired,
+  mapContainerStyle: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   defaultPosition: PropTypes.object.isRequired,
   zoom: PropTypes.number,
   radius: PropTypes.number,
-  circleOptions: PropTypes.object
+  circleOptions: PropTypes.object,
+  mapOptions: PropTypes.object
 };
 
 LocationPicker.defaultProps = {

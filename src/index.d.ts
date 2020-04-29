@@ -8,8 +8,8 @@ export interface Location {
 }
 
 export interface Props {
-  containerElement: React.ReactElement<any>;
-  mapElement: React.ReactElement<any>;
+  mapContainerStyle: object;
+  mapOptions?: object;
   onChange: (location: Location) => void;
   defaultPosition: google.maps.LatLng | google.maps.LatLngLiteral;
   zoom?: number;

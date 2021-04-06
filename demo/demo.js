@@ -12,6 +12,14 @@ const defaultPosition = {
   lng: 86.9250
 };
 
+/* Map options (https://developers.google.com/maps/documentation/javascript/controls) */
+const mapOptions = {
+  fullscreenControl: false,
+  streetViewControl: false,
+  zoomControl: false,
+  mapTypeControl: false
+}
+
 class LocationPickerExample extends Component {
   constructor (props) {
     super(props);
@@ -52,11 +60,11 @@ class LocationPickerExample extends Component {
         <h1>{this.state.address}</h1>
         <div>
           <LocationPicker
-            containerElement={ <div style={ {height: '100%'} } /> }
-            mapElement={ <div style={ {height: '400px'} } /> }
+            mapContainerStyle={{height: '200px', width: '400px'}}
             defaultPosition={this.state.defaultPosition}
             radius={-1}
             onChange={this.handleLocationChange}
+            mapOptions={mapOptions}
           />
         </div>
       </div>

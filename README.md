@@ -54,9 +54,8 @@ class LocationPickerExample extends Component {
         <h1>{this.state.address}</h1>
         <div>
           <LocationPicker
-            containerElement={ <div style={ {height: '100%'} } /> }
-            mapElement={ <div style={ {height: '400px'} } /> }
-            defaultPosition={defaultPosition}
+            mapContainerStyle={{height: '200px', width: '400px'}}
+            defaultPosition={this.state.defaultPosition}
             onChange={this.handleLocationChange}
           />
         </div>
@@ -70,14 +69,14 @@ LocationPicker properties
 
 | Property | Type | Description |  
 |---------------------|-------------------|------------------|  
-| containerElement | node | required, A container element for map element|  
-| mapElement | node | required, A map element|  
+| mapContainerStyle | object | required, A object with height and width who is passed to the map|
 | onChange | function | required, A callback which gets called on every map marker position change, it is passed with one argument of type object which has location information.|
 | defaultPosition | object | required, A default position for map center.|
 | zoom | number | optional, Map zoom level |
 | radius | number | optional, Circle radius in meter. or Pass -1 to hide it.|
-| circleOptions | object | optional,  https://developers.google.com/maps/documentation/javascript/3.exp/reference#CircleOptions
-  
+| circleOptions | object | optional,  https://developers.google.com/maps/documentation/javascript/3.exp/reference#CircleOptions|
+| mapOptions | object | optional, https://developers.google.com/maps/documentation/javascript/reference/map#MapOptions
+
 
 ### Development
 For demo, clone this repo and run

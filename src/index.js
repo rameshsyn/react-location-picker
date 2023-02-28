@@ -28,10 +28,14 @@ class LocationPicker extends Component {
 
     this.state = {
       position: props.defaultPosition,
-      shouldRecenterMap: false
+      shouldRecenterMap: false,
+      address:"",
+      search:""
     };
 
     this.handleMarkerDragEnd = this.handleMarkerDragEnd.bind(this);
+    this.handleChangeInput = this.handleChangeInput.bind(this);
+    this.handleChangeSuggestion = this.handleChangeSuggestion.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -59,11 +63,16 @@ class LocationPicker extends Component {
 
   notify(position, places) {
     const { onChange } = this.props;
+    const address = places.length > 0 ? places[0].formatted_address : '';
+
     const location = {
       position,
       places,
-      address: places.length > 0 ? places[0].formatted_address : ''
+      address
     };
+
+    this.setState({address,position});
+
     onChange && onChange(location);
   }
   /**
@@ -76,7 +85,7 @@ class LocationPicker extends Component {
     const lat = mouseEvent.latLng.lat();
     const lng = mouseEvent.latLng.lng();
     const position = { lat, lng };
-    this.setState({ position, shouldRecenterMap: false });
+    this.setState({shouldRecenterMap: false, search:"" });
     this.geocodePosition(position)
       .then(places => {
         this.notify(position, places);
@@ -85,6 +94,26 @@ class LocationPicker extends Component {
         console.error(err);
         this.notify(position, []);
       });
+  }
+
+  /**
+   * Handle search box input change
+   * @param { string } value
+   */
+  handleChangeInput(value){
+    this.setState({address:value,search:value});
+  }
+
+  /**
+   * Handle change the position by search box
+   * @param { google.maps.GeocoderResult } suggestion // https://github.com/cedricdelpoux/react-google-places-suggest#props
+   */
+  handleChangeSuggestion(suggestion){
+    const position = suggestion.geometry.location;
+
+    this.setState({shouldRecenterMap:true,search:""});
+
+    this.notify({lat:position.lat(),lng: position.lng()},[suggestion])
   }
 
   /**
@@ -116,20 +145,25 @@ class LocationPicker extends Component {
       mapElement
     } = this.props;
 
-    const { position, shouldRecenterMap } = this.state;
+    const { position, shouldRecenterMap, address, search } = this.state;
+
 
     return (
-      <Map
-        containerElement={containerElement}
-        mapElement={mapElement}
-        handleMarkerDragEnd={this.handleMarkerDragEnd}
-        position={position}
-        circleOptions={circleOptions}
-        radius={radius}
-        defaultZoom={zoom}
-        zoom={zoom}
-        shouldRecenterMap={shouldRecenterMap}
-      />
+        <Map
+          containerElement={containerElement}
+          mapElement={mapElement}
+          handleMarkerDragEnd={this.handleMarkerDragEnd}
+          position={position}
+          circleOptions={circleOptions}
+          radius={radius}
+          defaultZoom={zoom}
+          zoom={zoom}
+          shouldRecenterMap={shouldRecenterMap}
+          onChangeInput={this.handleChangeInput}
+          onChangeSuggestion={this.handleChangeSuggestion}
+          address={address}
+          search={search}
+        />
     );
   }
 }

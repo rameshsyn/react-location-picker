@@ -2,6 +2,9 @@
   "presets": [
     "react",
     "env"
+  ],
+  "plugins": [
+    "inline-react-svg"
   ]
 }
 

@@ -1,24 +1,35 @@
-const { resolve } = require("path");
+const path = require('path');
 
-const config = {
-  entry: "./demo/demo.js",
+module.exports = {
+  entry: './demo/demo.tsx',
   output: {
-    path: resolve(__dirname, "demo"),
-    filename: "demo.bundle.js"
+    path: path.resolve(__dirname, 'demo'),
+    filename: 'demo.bundle.js',
   },
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
-        use: 'babel-loader'
-      }
-    ]
+        use: {
+          loader: 'babel-loader',
+        },
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    alias: {
+      // Allow demo to import from the src directory directly
+      'react-location-picker': path.resolve(__dirname, 'src'),
+    },
   },
   devServer: {
-    contentBase: './demo'
-  }
+    static: {
+      directory: path.join(__dirname, 'demo'),
+    },
+    compress: true,
+    port: 9000,
+  },
+  mode: 'development',
 };
-
-
-module.exports = config;
